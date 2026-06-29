@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Jobs Connect</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Local Jobs Connect home">
+      <span class="brand-mark">LJ</span>
+      <span>Local Jobs Connect</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/login.html">Login</a>
+      <a href="/jobs.html">Jobs</a>
+      <a href="/post.html">Post Job</a>
+      <a href="/applications.html">Applications</a>
+    </nav>
+  </header>
+
+
+  <main>
+    <section class="hero hero--welcome">
+      <div class="hero-copy">
+        <div class="welcome-anim" aria-label="Welcome" role="heading" aria-level="1">
+          <span id="welcomeLetters" class="welcome-letter"></span>
+        </div>
+
+        <p class="eyebrow">Community work, found nearby</p>
+        <h1>Find trusted local jobs for cleaners, gardeners, house help, security, and casual workers.</h1>
+        <p class="hero-text">A simple web platform where employers post local work and job seekers apply without moving door to door.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="/login.html">Sign in</a>
+          <a class="button secondary" href="/jobs.html">Browse jobs</a>
+        </div>
+      </div>
+
+      <div class="hero-media" aria-label="Local jobs hero background">
+        <img
+          src="assets/local-jobs-hero.png"
+          alt="A gardener boy slashing the garden area"
+          class="hero-bg-img"
+        />
+      </div>
+    </section>
+
+    <script>
+      // Letter-by-letter Welcome animation on the first page
+      (function () {
+        const host = document.getElementById('welcomeLetters');
+        if (!host) return;
+        const text = 'Welcome';
+        host.textContent = '';
+        let i = 0;
+        const interval = setInterval(() => {
+          host.textContent += text[i];
+          i += 1;
+          if (i >= text.length) clearInterval(interval);
+        }, 140);
+      })();
+    </script>
+
+
+    <section class="quick-stats" aria-label="Platform highlights">
+      <div>
+        <strong>Local only</strong>
+        <span>Search by area and type of work.</span>
+      </div>
+      <div>
+        <strong>Easy to use</strong>
+        <span>Simple pages for users with limited technical skills.</span>
+      </div>
+      <div>
+        <strong>Database backed</strong>
+        <span>Jobs and applications are saved in SQLite.</span>
+      </div>
+    </section>
+
+    <section class="how-section">
+      <div class="section-heading">
+        <p class="eyebrow">Simple process</p>
+        <h2>How the platform works</h2>
+      </div>
+      <div class="steps">
+        <article>
+          <span>1</span>
+          <h3>Employers post jobs</h3>
+          <p>Local employers add work such as cleaning, gardening, house help, security, or shop assistant jobs.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Job seekers search</h3>
+          <p>Workers browse jobs by service type, area, pay, and schedule.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>Applicants connect</h3>
+          <p>The application form saves the applicant details for the employer to review.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Local Jobs Connect prototype based on the Group 6 Local Jobs Web Platform documents.</p>
+  </footer>
+</body>
+</html>

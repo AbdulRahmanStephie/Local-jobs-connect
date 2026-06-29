@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications - Local Jobs Connect</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="applications">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Local Jobs Connect home">
+      <span class="brand-mark">LJ</span>
+      <span>Local Jobs Connect</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/jobs.html">Jobs</a>
+      <a href="/post.html">Post Job</a>
+      <a href="/applications.html" aria-current="page">Applications</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">Database records</p>
+      <h1>Submitted applications</h1>
+      <p>This page shows applications saved in the SQLite database.</p>
+    </section>
+
+    <section class="jobs-section">
+      <div class="application-list" id="applicationList" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

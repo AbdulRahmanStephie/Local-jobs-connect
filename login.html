@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Local Jobs Connect</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="login">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Local Jobs Connect home">
+      <span class="brand-mark">LJ</span>
+      <span>Local Jobs Connect</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/jobs.html">Jobs</a>
+      <a href="/post.html">Post Job</a>
+      <a href="/applications.html">Applications</a>
+    </nav>
+  </header>
+
+  <main class="auth-wrap">
+    <section class="auth-card">
+      <h1 class="auth-title" id="welcomeText" aria-label="Welcome">Welcome</h1>
+      <p class="auth-subtitle">Sign in to continue.</p>
+
+      <div class="auth-buttons" role="group" aria-label="Choose account type">
+        <button type="button" class="button primary" onclick="onRole('employer')">Employer sign in</button>
+        <button type="button" class="button primary" onclick="onRole('employee')">Employee sign in</button>
+
+      </div>
+
+      <div class="auth-hint">
+        <span>Demo login (no real authentication yet).</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Local Jobs Connect prototype</p>
+  </footer>
+
+  <script>
+    // Letter-by-letter welcome animation
+    (function () {
+      const el = document.getElementById('welcomeText');
+      if (!el) return;
+      const text = 'Welcome';
+      el.textContent = '';
+      let i = 0;
+      const interval = setInterval(() => {
+        el.textContent += text[i];
+        i += 1;
+        if (i >= text.length) clearInterval(interval);
+      }, 140);
+    })();
+
+    function onRole(role) {
+      // Simple demo routing based on role.
+      // Employer can post jobs; employee can browse jobs.
+      if (role === 'employer') window.location.href = '/post.html';
+      else window.location.href = '/jobs.html';
+    }
+  </script>
+</body>
+</html>
+
+
