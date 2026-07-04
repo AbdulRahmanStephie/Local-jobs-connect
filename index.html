@@ -5,69 +5,76 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Local Jobs Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="assets/job-connect-icon.svg">
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Local Jobs Connect home">
-      <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
-      <span>Local Jobs Connect</span>
-    </a>
-    <nav aria-label="Main navigation">
-      <a href="/login.html">Login</a>
-      <a href="/jobs.html">Jobs</a>
-      <a href="/post.html">Post Job</a>
-      <a href="/applications.html">Applications</a>
-    </nav>
-  </header>
+<body data-page="home">
+  <div class="page-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Local Jobs Connect home">
+        <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
+        <span>Local Jobs Connect</span>
+      </a>
+      <nav aria-label="Sidebar navigation">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/jobs.html">Jobs</a>
+        <a href="/post.html">Post Job</a>
+        <a href="/applications.html">Applications</a>
+      </nav>
+    </aside>
+
+    <div class="page-content">
+      <header class="site-header"></header>
+
+      <main>
+        <section class="hero hero--welcome">
+          <div class="hero-copy">
+            <div class="welcome-anim" aria-label="Welcome" role="heading" aria-level="1">
+              <span id="welcomeLetters" class="welcome-letter"></span>
+            </div>
+
+            <p class="eyebrow">Community work, found nearby</p>
+            <h1>Connecting local talent with trusted work nearby.</h1>
+            <div class="hero-actions">
+              <a class="button primary" href="/login.html">Sign in</a>
+              <a class="button secondary" href="/jobs.html">Browse jobs</a>
+            </div>
+          </div>
+
+          <div class="hero-media" aria-label="Local jobs hero background">
+            <img src="assets/local-jobs-hero.png" alt="A gardener boy slashing the garden area" class="hero-bg-img" />
+          </div>
+        </section>
+
+        <script src="script.js"></script>
+        <script>
+          // Letter-by-letter Welcome animation on the first page
+          (function () {
+            const host = document.getElementById('welcomeLetters');
+            if (!host) return;
+            const text = 'Welcome';
+            host.textContent = '';
+            let i = 0;
+            const interval = setInterval(() => {
+              host.textContent += text[i];
+              i += 1;
+              if (i >= text.length) clearInterval(interval);
+            }, 140);
+          })();
+        </script>
 
 
-  <main>
-    <section class="hero hero--welcome">
-      <div class="hero-copy">
-        <div class="welcome-anim" aria-label="Welcome" role="heading" aria-level="1">
-          <span id="welcomeLetters" class="welcome-letter"></span>
-        </div>
+      </main>
 
-        <p class="eyebrow">Community work, found nearby</p>
-        <h1>Find trusted local jobs for cleaners, gardeners, house help, security, and casual workers.</h1>
-        <p class="hero-text">A simple web platform where employers post local work and job seekers apply without moving
-          door to door.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="/login.html">Sign in</a>
-          <a class="button secondary" href="/jobs.html">Browse jobs</a>
-        </div>
-      </div>
-
-      <div class="hero-media" aria-label="Local jobs hero background">
-        <img src="assets/local-jobs-hero.png" alt="A gardener boy slashing the garden area" class="hero-bg-img" />
-      </div>
-    </section>
-
-    <script>
-      // Letter-by-letter Welcome animation on the first page
-      (function () {
-        const host = document.getElementById('welcomeLetters');
-        if (!host) return;
-        const text = 'Welcome';
-        host.textContent = '';
-        let i = 0;
-        const interval = setInterval(() => {
-          host.textContent += text[i];
-          i += 1;
-          if (i >= text.length) clearInterval(interval);
-        }, 140);
-      })();
-    </script>
-
-
-  </main>
-
-  <footer>
-    <p>We connect</p>
-  </footer>
+      <footer>
+        <p>We connect</p>
+      </footer>
+    </div>
+  </div>
 </body>
 
 </html>

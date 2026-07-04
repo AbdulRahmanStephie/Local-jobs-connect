@@ -10,39 +10,47 @@
 </head>
 
 <body data-page="login">
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Local Jobs Connect home">
-      <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
-      <span>Local Jobs Connect</span>
-    </a>
-    <nav aria-label="Main navigation">
-      <a href="/jobs.html">Jobs</a>
-      <a href="/post.html">Post Job</a>
-      <a href="/applications.html">Applications</a>
-    </nav>
-  </header>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Local Jobs Connect home">
+        <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
+        <span>Local Jobs Connect</span>
+      </a>
+      <nav aria-label="Sidebar navigation">
+        <a href="/">Home</a>
+        <a href="/jobs.html">Jobs</a>
+        <a href="/post.html">Post Job</a>
+        <a href="/applications.html">Applications</a>
+      </nav>
+    </aside>
 
-  <main class="auth-wrap">
-    <section class="auth-card">
-      <h1 class="auth-title" id="welcomeText" aria-label="Welcome">Welcome</h1>
-      <p class="auth-subtitle">Sign in to continue.</p>
+    <div class="page-content">
+      <header class="site-header"></header>
 
-      <div class="auth-buttons" role="group" aria-label="Choose account type">
-        <button type="button" class="button primary" onclick="onRole('employer')">Employer sign in</button>
-        <button type="button" class="button primary" onclick="onRole('employee')">Employee sign in</button>
+      <main class="auth-wrap">
+        <section class="auth-card">
+          <h1 class="auth-title" id="welcomeText" aria-label="Welcome">Welcome</h1>
+          <p class="auth-subtitle">Sign in to continue.</p>
 
-      </div>
+          <div class="auth-buttons" role="group" aria-label="Choose account type">
+            <button type="button" class="button primary" onclick="onRole('employer')">Employer sign in</button>
+            <button type="button" class="button primary" onclick="onRole('employee')">Employee sign in</button>
 
-      <div class="auth-hint">
-        <span>Demo login (no real authentication yet).</span>
-      </div>
-    </section>
-  </main>
+          </div>
 
-  <footer>
-    <p>Local Jobs Connect prototype</p>
-  </footer>
+          <div class="auth-hint">
+            <span>Demo login (no real authentication yet).</span>
+          </div>
+        </section>
+      </main>
 
+      <footer>
+        <p>Local Jobs Connect prototype</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
   <script>
     // Letter-by-letter welcome animation
     (function () {

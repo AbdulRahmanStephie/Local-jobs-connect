@@ -31,6 +31,51 @@ a {
   color: inherit;
 }
 
+.page-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 100vh;
+  padding: 24px 20px;
+  border-right: 1px solid var(--line);
+  background: linear-gradient(180deg, #f2f8f0 0%, #fbfdf9 100%);
+}
+
+.sidebar .brand {
+  margin-bottom: 4px;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 10px;
+}
+
+.sidebar nav a {
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.sidebar nav a[aria-current="page"] {
+  color: var(--green-dark);
+  background: rgba(31, 122, 77, 0.12);
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -86,7 +131,7 @@ nav a[aria-current="page"] {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
   gap: clamp(24px, 5vw, 64px);
   align-items: center;
   min-height: calc(100vh - 70px);
@@ -105,7 +150,8 @@ nav a[aria-current="page"] {
 
 .welcome-anim {
   margin: 18px 0 10px;
-  font-weight: 900;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 800;
   color: var(--blue);
   font-size: clamp(2rem, 4vw, 3.2rem);
   letter-spacing: 0.08em;
@@ -171,6 +217,11 @@ nav a[aria-current="page"] {
 
 .hero-copy {
   max-width: 720px;
+  order: 2;
+}
+
+.hero-media {
+  order: 1;
 }
 
 .eyebrow {
@@ -406,6 +457,63 @@ textarea {
   font-size: 0.93rem;
 }
 
+.job-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.job-actions .button {
+  min-height: 40px;
+}
+
+.whatsapp-link {
+  color: var(--green-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.whatsapp-link:hover {
+  text-decoration: underline;
+}
+
+.applicant-panel {
+  margin-top: 12px;
+}
+
+.applicant-list {
+  display: grid;
+  gap: 10px;
+}
+
+.applicant-card {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7fcf6;
+}
+
+.applicant-card h4 {
+  margin: 0 0 6px;
+}
+
+.access-dialog-form {
+  display: grid;
+  gap: 12px;
+  min-width: min(420px, calc(100vw - 32px));
+  padding: 6px 2px 2px;
+}
+
+.access-dialog-form h3 {
+  margin: 0;
+}
+
+.access-dialog-form p {
+  margin: 0;
+  color: var(--muted);
+}
+
 .post-section {
   background: #f6faf4;
   border-block: 1px solid var(--line);
@@ -528,6 +636,17 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .page-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;

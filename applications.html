@@ -10,31 +10,38 @@
 </head>
 
 <body data-page="applications">
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Local Jobs Connect home">
-      <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
-      <span>Local Jobs Connect</span>
-    </a>
-    <nav aria-label="Main navigation">
-      <a href="/jobs.html">Jobs</a>
-      <a href="/post.html">Post Job</a>
-      <a href="/applications.html" aria-current="page">Applications</a>
-    </nav>
-  </header>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Local Jobs Connect home">
+        <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
+        <span>Local Jobs Connect</span>
+      </a>
+      <nav aria-label="Sidebar navigation">
+        <a href="/">Home</a>
+        <a href="/jobs.html">Jobs</a>
+        <a href="/post.html">Post Job</a>
+        <a href="/applications.html" aria-current="page">Applications</a>
+      </nav>
+    </aside>
 
-  <main>
-    <section class="page-hero">
-      <p class="eyebrow">Database records</p>
-      <h1>Submitted applications</h1>
-      <p>This page shows applications saved in the SQLite database.</p>
-    </section>
+    <div class="page-content">
+      <header class="site-header"></header>
 
-    <section class="jobs-section">
-      <div class="application-list" id="applicationList" aria-live="polite"></div>
-    </section>
-  </main>
+      <main>
+        <section class="page-hero">
+          <p class="eyebrow">Database records</p>
+          <h1>Submitted applications</h1>
+          <p>This page shows applications saved in the SQLite database.</p>
+        </section>
 
-  <script src="script.js"></script>
+        <section class="jobs-section">
+          <div class="application-list" id="applicationList" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <script src="script.js"></script>
+    </div>
+  </div>
 </body>
 
 </html>

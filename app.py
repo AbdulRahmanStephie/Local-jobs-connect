@@ -63,6 +63,45 @@ def connect():
     return connection
 
 
+def normalize_phone(phone):
+    return "".join(char for char in str(phone or "") if char.isdigit())
+
+
+def build_whatsapp_url(phone):
+    digits = normalize_phone(phone)
+    return f"https://wa.me/{digits}" if digits else None
+
+
+def get_applications_for_job(job_id, employer_phone):
+    with connect() as db:
+        job = db.execute("SELECT employer_phone FROM jobs WHERE id = ?", (job_id,)).fetchone()
+        if job is None:
+            raise LookupError("Job not found")
+        if normalize_phone(job["employer_phone"]) != normalize_phone(employer_phone):
+            raise PermissionError("Only the job poster can view applicants for this job.")
+
+        rows = db.execute(
+            """
+            SELECT
+                applications.id,
+                applications.applicant_name,
+                applications.phone,
+                applications.area,
+                applications.message,
+                applications.created_at,
+                jobs.title AS job_title,
+                jobs.category,
+                jobs.employer_phone
+            FROM applications
+            JOIN jobs ON jobs.id = applications.job_id
+            WHERE applications.job_id = ?
+            ORDER BY applications.id DESC
+            """,
+            (job_id,),
+        ).fetchall()
+    return rows_to_dicts(rows)
+
+
 def init_db():
     with connect() as db:
         db.execute(
@@ -153,7 +192,7 @@ class LocalJobsHandler(SimpleHTTPRequestHandler):
         if parsed.path.startswith("/api/jobs/"):
             return self.get_job(parsed.path)
         if parsed.path == "/api/applications":
-            return self.get_applications()
+            return self.get_applications(parsed)
         return super().do_GET()
 
     def do_POST(self):
@@ -249,7 +288,44 @@ class LocalJobsHandler(SimpleHTTPRequestHandler):
             db.commit()
         self.send_json({"id": cursor.lastrowid, "message": "Application created"}, 201)
 
-    def get_applications(self):
+    def get_applications(self, parsed=None):
+        query = parse_qs(parsed.query if parsed else "")
+        job_id = query.get("job_id", [""])[0].strip()
+        employer_phone = query.get("employer_phone", [""])[0].strip()
+
+        if job_id:
+            try:
+                rows = get_applications_for_job(int(job_id), employer_phone)
+            except LookupError as error:
+                return self.send_error_json(str(error), 404)
+            except PermissionError as error:
+                return self.send_error_json(str(error), 403)
+            self.send_json(rows)
+            return
+
+        if employer_phone:
+            with connect() as db:
+                rows = db.execute(
+                    """
+                    SELECT
+                        applications.id,
+                        applications.applicant_name,
+                        applications.phone,
+                        applications.area,
+                        applications.message,
+                        applications.created_at,
+                        jobs.title AS job_title,
+                        jobs.category,
+                        jobs.employer_phone
+                    FROM applications
+                    JOIN jobs ON jobs.id = applications.job_id
+                    ORDER BY applications.id DESC
+                    """
+                ).fetchall()
+            rows = [row for row in rows_to_dicts(rows) if normalize_phone(row["employer_phone"]) == normalize_phone(employer_phone)]
+            self.send_json(rows)
+            return
+
         with connect() as db:
             rows = db.execute(
                 """
@@ -261,7 +337,8 @@ class LocalJobsHandler(SimpleHTTPRequestHandler):
                     applications.message,
                     applications.created_at,
                     jobs.title AS job_title,
-                    jobs.category
+                    jobs.category,
+                    jobs.employer_phone
                 FROM applications
                 JOIN jobs ON jobs.id = applications.job_id
                 ORDER BY applications.id DESC

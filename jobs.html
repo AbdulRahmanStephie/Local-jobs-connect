@@ -10,54 +10,61 @@
 </head>
 
 <body data-page="jobs">
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Local Jobs Connect home">
-      <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
-      <span>Local Jobs Connect</span>
-    </a>
-    <nav aria-label="Main navigation">
-      <a href="/jobs.html" aria-current="page">Jobs</a>
-      <a href="/post.html">Post Job</a>
-      <a href="/applications.html">Applications</a>
-    </nav>
-  </header>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Local Jobs Connect home">
+        <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
+        <span>Local Jobs Connect</span>
+      </a>
+      <nav aria-label="Sidebar navigation">
+        <a href="/">Home</a>
+        <a href="/jobs.html" aria-current="page">Jobs</a>
+        <a href="/post.html">Post Job</a>
+        <a href="/applications.html">Applications</a>
+      </nav>
+    </aside>
 
-  <main>
-    <section class="page-hero">
-      <p class="eyebrow">Available work</p>
-      <h1>Browse local job opportunities</h1>
-      <p>Use the filters to find work near you. Every job is loaded from the database.</p>
-    </section>
+    <div class="page-content">
+      <header class="site-header"></header>
 
-    <section class="jobs-section">
-      <form class="filters" id="filters" aria-label="Job filters">
-        <label>
-          Search
-          <input id="searchInput" type="search" placeholder="Cleaner, garden, security">
-        </label>
-        <label>
-          Service
-          <select id="categoryInput">
-            <option value="all">All services</option>
-            <option value="Cleaning">Cleaning</option>
-            <option value="Gardening">Gardening</option>
-            <option value="House Help">House Help</option>
-            <option value="Security">Security</option>
-            <option value="Shop Assistant">Shop Assistant</option>
-          </select>
-        </label>
-        <label>
-          Area
-          <input id="areaInput" placeholder="Area 25">
-        </label>
-      </form>
+      <main>
+        <section class="page-hero">
+          <p class="eyebrow">Available work</p>
+          <h1>Browse local job opportunities</h1>
+          <p>Use the filters to find work near you. Every job is loaded from the database.</p>
+        </section>
 
-      <div class="job-list" id="jobList" aria-live="polite"></div>
-    </section>
-  </main>
+        <section class="jobs-section">
+          <form class="filters" id="filters" aria-label="Job filters">
+            <label>
+              Search
+              <input id="searchInput" type="search" placeholder="Cleaner, garden, security">
+            </label>
+            <label>
+              Service
+              <select id="categoryInput">
+                <option value="all">All services</option>
+                <option value="Cleaning">Cleaning</option>
+                <option value="Gardening">Gardening</option>
+                <option value="House Help">House Help</option>
+                <option value="Security">Security</option>
+                <option value="Shop Assistant">Shop Assistant</option>
+              </select>
+            </label>
+            <label>
+              Area
+              <input id="areaInput" placeholder="Area 25">
+            </label>
+          </form>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="script.js"></script>
+          <div class="job-list" id="jobList" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <script src="script.js"></script>
+    </div>
+  </div>
 </body>
 
 </html>

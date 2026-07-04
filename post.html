@@ -10,69 +10,70 @@
 </head>
 
 <body data-page="post">
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Local Jobs Connect home">
-      <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
-      <span>Local Jobs Connect</span>
-    </a>
-    <nav aria-label="Main navigation">
-      <a href="/jobs.html">Jobs</a>
-      <a href="/post.html" aria-current="page">Post Job</a>
-      <a href="/applications.html">Applications</a>
-    </nav>
-  </header>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Local Jobs Connect home">
+        <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
+        <span>Local Jobs Connect</span>
+      </a>
+      <nav aria-label="Sidebar navigation">
+        <a href="/">Home</a>
+        <a href="/jobs.html">Jobs</a>
+        <a href="/post.html" aria-current="page">Post Job</a>
+        <a href="/applications.html">Applications</a>
+      </nav>
+    </aside>
 
-  <main>
-    <section class="page-hero">
-      <p class="eyebrow">Employers</p>
-      <h1>Post a local job</h1>
-      <p>Add a real job listing. It will be saved in the database and shown on the Jobs page.</p>
-    </section>
+    <div class="page-content">
+      <header class="site-header"></header>
 
-    <section class="post-section">
-      <form class="post-form" id="postJobForm">
-        <label>
-          Job title
-          <input name="title" required placeholder="Weekend cleaner">
-        </label>
-        <label>
-          Service type
-          <select name="category" required>
-            <option>Cleaning</option>
-            <option>Gardening</option>
-            <option>House Help</option>
-            <option>Security</option>
-            <option>Shop Assistant</option>
-          </select>
-        </label>
-        <label>
-          Area
-          <input name="area" required placeholder="Area 25">
-        </label>
-        <label>
-          Pay
-          <input name="pay" required placeholder="MWK 15,000 per week">
-        </label>
-        <label>
-          Schedule
-          <input name="schedule" required placeholder="Monday to Friday">
-        </label>
-        <label>
-          Employer phone
-          <input name="employer_phone" required placeholder="0888 000 000">
-        </label>
-        <label class="wide">
-          Job details
-          <textarea name="details" rows="5" required
-            placeholder="Describe the work, days, hours, and requirements."></textarea>
-        </label>
-        <button class="button primary wide" type="submit">Save job to database</button>
-      </form>
-    </section>
-  </main>
+      <main>
+        <section class="page-hero">
+          <p class="eyebrow">Employers</p>
+          <h1>Post a local job</h1>
+          <p>Add a real job listing. It will be saved in the database and shown on the Jobs page.</p>
+        </section>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="script.js"></script>
+        <section class="post-section">
+          <form class="post-form" id="postJobForm">
+            <label>
+              Job title
+              <input name="title" required placeholder="Weekend cleaner">
+            </label>
+            <label>
+              Service type
+              <input name="category" required placeholder="e.g. Plumbing, Delivery, Tutoring">
+            </label>
+            <label>
+              Area
+              <input name="area" required placeholder="Area 25">
+            </label>
+            <label>
+              Pay
+              <input name="pay" required placeholder="MWK 15,000 per week">
+            </label>
+            <label>
+              Schedule
+              <input name="schedule" required placeholder="Monday to Friday">
+            </label>
+            <label>
+              Employer phone
+              <input name="employer_phone" required placeholder="0888 000 000">
+            </label>
+            <label class="wide">
+              Job details
+              <textarea name="details" rows="5" required
+                placeholder="Describe the work, days, hours, and requirements."></textarea>
+            </label>
+            <button class="button primary wide" type="submit">Save job to database</button>
+          </form>
+        </section>
+      </main>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <script src="script.js"></script>
+    </div>
+  </div>
 </body>
 
 </html>
