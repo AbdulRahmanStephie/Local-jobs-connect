@@ -20,6 +20,17 @@ function setupSharedNavigation() {
   }
 }
 
+function setupSidebarToggle() {
+  const shell = document.querySelector(".page-shell");
+  const toggle = document.querySelector("#menuToggle");
+  if (!shell || !toggle) return;
+
+  toggle.addEventListener("click", () => {
+    const isOpen = shell.classList.toggle("sidebar-open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
+
 function showToast(message) {
   if (!toast) return;
   toast.textContent = message;
@@ -380,6 +391,7 @@ async function setupApplicationsPage() {
 }
 
 setupSharedNavigation();
+setupSidebarToggle();
 if (page === "jobs") setupJobsPage();
 if (page === "post") setupPostPage();
 if (page === "apply") setupApplyPage();

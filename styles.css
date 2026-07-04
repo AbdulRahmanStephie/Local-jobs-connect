@@ -33,8 +33,12 @@ a {
 
 .page-shell {
   display: grid;
-  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+  grid-template-columns: 0 minmax(0, 1fr);
   min-height: 100vh;
+}
+
+.page-shell.sidebar-open {
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
 }
 
 .sidebar {
@@ -47,6 +51,9 @@ a {
   padding: 24px 20px;
   border-right: 1px solid var(--line);
   background: linear-gradient(180deg, #f2f8f0 0%, #fbfdf9 100%);
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+  z-index: 20;
 }
 
 .sidebar .brand {
@@ -74,6 +81,7 @@ a {
 .page-content {
   display: flex;
   flex-direction: column;
+  transition: margin-left 0.2s ease;
 }
 
 .site-header {
@@ -81,13 +89,42 @@ a {
   top: 0;
   z-index: 10;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 14px clamp(16px, 4vw, 56px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 16px 10px;
   background: rgba(251, 253, 249, 0.94);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(12px);
+}
+
+.brand--header {
+  padding: 0;
+  margin: 0;
+}
+
+.brand--header .brand-mark {
+  width: 34px;
+  height: 34px;
+}
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--green-dark);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.page-shell.sidebar-open .sidebar {
+  transform: translateX(0);
 }
 
 .brand {

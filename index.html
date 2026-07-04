@@ -14,7 +14,7 @@
 
 <body data-page="home">
   <div class="page-shell">
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebarMenu">
       <a class="brand" href="/" aria-label="Local Jobs Connect home">
         <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
         <span>Local Jobs Connect</span>
@@ -28,7 +28,16 @@
     </aside>
 
     <div class="page-content">
-      <header class="site-header"></header>
+      <header class="site-header">
+        <a class="brand brand--header" href="/" aria-label="Local Jobs Connect home">
+          <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
+          <span>Local Jobs Connect</span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu" aria-controls="sidebarMenu"
+          aria-expanded="false">
+          ☰
+        </button>
+      </header>
 
       <main>
         <section class="hero hero--welcome">

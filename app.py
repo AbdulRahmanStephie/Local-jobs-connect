@@ -350,8 +350,10 @@ class LocalJobsHandler(SimpleHTTPRequestHandler):
 def main():
     init_db()
     port = int(os.environ.get("PORT", "8000"))
-    server = ThreadingHTTPServer(("127.0.0.1", port), LocalJobsHandler)
-    print(f"Local Jobs Connect is running at http://127.0.0.1:{port}/")
+    host = os.environ.get("HOST", "0.0.0.0")
+    server = ThreadingHTTPServer((host, port), LocalJobsHandler)
+    print(f"Local Jobs Connect is running at http://{host}:{port}/")
+    print(f"Open http://127.0.0.1:{port}/ locally")
     print(f"Database file: {DB_PATH}")
     server.serve_forever()
 
