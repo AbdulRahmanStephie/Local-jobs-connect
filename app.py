@@ -1,9 +1,18 @@
+from datetime import datetime, timedelta
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import ipaddress
 import json
 import os
 from pathlib import Path
 import sqlite3
+import ssl
 from urllib.parse import parse_qs, urlparse
+
+from cryptography import x509
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.serialization import Encoding, NoEncryption, PrivateFormat
+from cryptography.x509.oid import NameOID
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "localjobs.db"
@@ -347,13 +356,57 @@ class LocalJobsHandler(SimpleHTTPRequestHandler):
         self.send_json(rows_to_dicts(rows))
 
 
+def ensure_https_certificate(cert_path, key_path):
+    if cert_path.exists() and key_path.exists():
+        return
+
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    subject = issuer = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "localhost")])
+    now = datetime.utcnow()
+
+    certificate = (
+        x509.CertificateBuilder()
+        .subject_name(subject)
+        .issuer_name(issuer)
+        .public_key(private_key.public_key())
+        .serial_number(x509.random_serial_number())
+        .not_valid_before(now - timedelta(days=1))
+        .not_valid_after(now + timedelta(days=365))
+        .add_extension(
+            x509.SubjectAlternativeName([
+                x509.DNSName("localhost"),
+                x509.IPAddress(ipaddress.IPv4Address("127.0.0.1")),
+            ]),
+            critical=False,
+        )
+        .sign(private_key, hashes.SHA256())
+    )
+
+    key_path.write_bytes(
+        private_key.private_bytes(
+            encoding=Encoding.PEM,
+            format=PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=NoEncryption(),
+        )
+    )
+    cert_path.write_bytes(certificate.public_bytes(Encoding.PEM))
+
+
 def main():
     init_db()
     port = int(os.environ.get("PORT", "8000"))
     host = os.environ.get("HOST", "0.0.0.0")
+    cert_path = BASE_DIR / "cert.pem"
+    key_path = BASE_DIR / "key.pem"
+    ensure_https_certificate(cert_path, key_path)
+
     server = ThreadingHTTPServer((host, port), LocalJobsHandler)
-    print(f"Local Jobs Connect is running at http://{host}:{port}/")
-    print(f"Open http://127.0.0.1:{port}/ locally")
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(cert_path, key_path)
+    server.socket = context.wrap_socket(server.socket, server_side=True)
+
+    print(f"Local Jobs Connect is running at https://127.0.0.1:{port}/")
+    print(f"Open https://127.0.0.1:{port}/ locally")
     print(f"Database file: {DB_PATH}")
     server.serve_forever()
 
