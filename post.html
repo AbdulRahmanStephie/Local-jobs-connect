@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Post Job - Local Jobs Connect</title>
+  <link rel="icon" type="image/svg+xml" href="assets/job-connect-icon.svg">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body data-page="post">
   <header class="site-header">
     <a class="brand" href="/" aria-label="Local Jobs Connect home">
-      <span class="brand-mark">LJ</span>
+      <img class="brand-mark" src="assets/job-connect-icon.svg" alt="" aria-hidden="true">
       <span>Local Jobs Connect</span>
     </a>
     <nav aria-label="Main navigation">
@@ -60,7 +63,8 @@
         </label>
         <label class="wide">
           Job details
-          <textarea name="details" rows="5" required placeholder="Describe the work, days, hours, and requirements."></textarea>
+          <textarea name="details" rows="5" required
+            placeholder="Describe the work, days, hours, and requirements."></textarea>
         </label>
         <button class="button primary wide" type="submit">Save job to database</button>
       </form>
@@ -70,4 +74,5 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
+
 </html>
