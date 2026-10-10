@@ -1,6 +1,16 @@
 const page = document.body.dataset.page;
 const toast = document.querySelector("#toast");
 
+function formatPhoneDisplay(value) {
+  const text = String(value || "").trim();
+  return text || "Not provided";
+}
+
+function formatLabelValue(label, value) {
+  const safeValue = value == null || value === "" ? "Not provided" : String(value);
+  return { label, value: safeValue };
+}
+
 function setupSharedNavigation() {
   const nav = document.querySelector(".sidebar nav");
   if (!nav) return;
@@ -128,10 +138,10 @@ function jobCard(job) {
   const meta = document.createElement("div");
   meta.className = "job-meta";
   [
-    ["Area:", job.area],
-    ["Pay:", job.pay],
-    ["Schedule:", job.schedule]
-  ].forEach(([label, value]) => {
+    formatLabelValue("Area:", job.area),
+    formatLabelValue("Pay:", job.pay),
+    formatLabelValue("Schedule:", job.schedule)
+  ].forEach(({ label, value }) => {
     const row = document.createElement("span");
     const strong = document.createElement("strong");
     strong.textContent = label;
@@ -147,7 +157,7 @@ function jobCard(job) {
   phoneLink.href = buildWhatsAppUrl(job.employer_phone) || "#";
   phoneLink.target = "_blank";
   phoneLink.rel = "noreferrer";
-  phoneLink.textContent = job.employer_phone;
+  phoneLink.textContent = formatPhoneDisplay(job.employer_phone);
   phoneLink.setAttribute("aria-label", `Chat on WhatsApp about ${job.title}`);
   phoneRow.append(phoneLabel, " ", phoneLink);
   meta.append(phoneRow);
@@ -185,18 +195,18 @@ function jobCard(job) {
         card.className = "applicant-card";
 
         const name = document.createElement("h4");
-        name.textContent = application.applicant_name;
+        name.textContent = application.applicant_name || "Applicant";
 
         const message = document.createElement("p");
-        message.textContent = application.message;
+        message.textContent = application.message || "No message provided.";
 
         const applicantMeta = document.createElement("div");
         applicantMeta.className = "job-meta";
         [
-          ["Phone:", application.phone],
-          ["Area:", application.area],
-          ["Date:", application.created_at]
-        ].forEach(([label, value]) => {
+          formatLabelValue("Phone:", application.phone),
+          formatLabelValue("Area:", application.area),
+          formatLabelValue("Date:", application.created_at)
+        ].forEach(({ label, value }) => {
           const row = document.createElement("span");
           const strong = document.createElement("strong");
           strong.textContent = label;
@@ -210,6 +220,7 @@ function jobCard(job) {
         contactLink.target = "_blank";
         contactLink.rel = "noreferrer";
         contactLink.textContent = "Contact on WhatsApp";
+        contactLink.setAttribute("aria-label", `Contact ${name.textContent} on WhatsApp`);
 
         card.append(name, message, applicantMeta, contactLink);
         list.append(card);
@@ -256,13 +267,16 @@ async function loadJobs() {
 
 function setupJobsPage() {
   ["#searchInput", "#categoryInput", "#areaInput"].forEach((selector) => {
-    document.querySelector(selector).addEventListener("input", loadJobs);
+    const field = document.querySelector(selector);
+    if (field) field.addEventListener("input", loadJobs);
   });
   loadJobs().catch((error) => showToast(error.message));
 }
 
 function setupPostPage() {
   const form = document.querySelector("#postJobForm");
+  if (!form) return;
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(form));
@@ -291,6 +305,8 @@ async function setupApplyPage() {
   const jobDetails = document.querySelector("#jobDetails");
   const form = document.querySelector("#applyForm");
 
+  if (!jobDetails || !form) return;
+
   if (!jobId) {
     jobDetails.innerHTML = '<p class="empty">No job was selected. Please choose a job from the Jobs page.</p>';
     form.hidden = true;
@@ -299,7 +315,8 @@ async function setupApplyPage() {
 
   try {
     const job = await api(`/api/jobs/${jobId}`);
-    jobDetails.replaceWith(jobCard(job));
+    const jobCardElement = jobCard(job);
+    jobDetails.replaceWith(jobCardElement);
   } catch (error) {
     jobDetails.innerHTML = `<p class="empty">${error.message}</p>`;
     form.hidden = true;
@@ -310,6 +327,7 @@ async function setupApplyPage() {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(form));
     data.job_id = Number(jobId);
+    data.name = data.name || data.applicant_name;
 
     try {
       await api("/api/applications", {
@@ -329,6 +347,8 @@ async function setupApplyPage() {
 
 async function setupApplicationsPage() {
   const list = document.querySelector("#applicationList");
+  if (!list) return;
+
   list.innerHTML = '<p class="empty">Loading applications...</p>';
 
   const employerPhone = await requestAccessPhone("Enter the phone number used to post your job to view its applications.");
@@ -352,22 +372,22 @@ async function setupApplicationsPage() {
 
       const tag = document.createElement("span");
       tag.className = "tag";
-      tag.textContent = application.category;
+      tag.textContent = application.category || "General";
 
       const name = document.createElement("h3");
-      name.textContent = application.applicant_name;
+      name.textContent = application.applicant_name || "Applicant";
 
       const message = document.createElement("p");
-      message.textContent = application.message;
+      message.textContent = application.message || "No message provided.";
 
       const meta = document.createElement("div");
       meta.className = "job-meta";
       [
-        ["Job:", application.job_title],
-        ["Phone:", application.phone],
-        ["Area:", application.area],
-        ["Date:", application.created_at]
-      ].forEach(([label, value]) => {
+        formatLabelValue("Job:", application.job_title),
+        formatLabelValue("Phone:", application.phone),
+        formatLabelValue("Area:", application.area),
+        formatLabelValue("Date:", application.created_at)
+      ].forEach(({ label, value }) => {
         const row = document.createElement("span");
         const strong = document.createElement("strong");
         strong.textContent = label;
@@ -381,6 +401,7 @@ async function setupApplicationsPage() {
       contactLink.target = "_blank";
       contactLink.rel = "noreferrer";
       contactLink.textContent = "Contact on WhatsApp";
+      contactLink.setAttribute("aria-label", `Contact ${name.textContent} on WhatsApp`);
 
       card.append(tag, name, message, meta, contactLink);
       list.append(card);
